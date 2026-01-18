@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Users - Admin{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">All Users</h2>
+
+<div class="card">
+    <div class="card-header">
+        <h5>User List ({{ users|length }})</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Full Name</th>
+                        <th>Role</th>
+                        <th>Joined</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.full_name or 'N/A' }}</td>
+                        <td>
+                            <span class="badge bg-{{ 'danger' if user.is_admin == 1 else 'primary' }}">
+                                {{ 'Admin' if user.is_admin == 1 else 'User' }}
+                            </span>
+                        </td>
+                        <td>{{ user.created_at[:10] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

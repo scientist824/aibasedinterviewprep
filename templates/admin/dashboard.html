@@ -1,0 +1,79 @@
+{% extends "base.html" %} {% block title %}Admin Dashboard - AI Interview
+Preparation System{% endblock %} {% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+
+<div class="row mb-4">
+  <div class="col-md-3">
+    <div class="card text-white bg-primary">
+      <div class="card-body">
+        <h5>Total Users</h5>
+        <h2>{{ stats.total_users }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-white bg-success">
+      <div class="card-body">
+        <h5>Total Questions</h5>
+        <h2>{{ stats.total_questions }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-white bg-info">
+      <div class="card-body">
+        <h5>Total Interviews</h5>
+        <h2>{{ stats.total_interviews }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-white bg-warning">
+      <div class="card-body">
+        <h5>HR Questions</h5>
+        <h2>{{ stats.hr_questions }}</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5>Quick Actions</h5>
+      </div>
+      <div class="card-body">
+        <a
+          href="{{ url_for('admin_questions') }}"
+          class="btn btn-primary w-100 mb-2"
+          >Manage Questions</a
+        >
+        <a
+          href="{{ url_for('admin_users') }}"
+          class="btn btn-outline-primary w-100 mb-2"
+          >View Users</a
+        >
+        <a
+          href="{{ url_for('admin_results') }}"
+          class="btn btn-success w-100"
+          >View Results</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5>Statistics</h5>
+      </div>
+      <div class="card-body">
+        <p><strong>HR Questions:</strong> {{ stats.hr_questions }}</p>
+        <p>
+          <strong>Technical Questions:</strong> {{ stats.technical_questions }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

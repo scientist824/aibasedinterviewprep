@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Performance - AI Interview Preparation System{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Your Performance History</h2>
+
+<div class="card">
+    <div class="card-header">
+        <h5>Interview Analytics</h5>
+    </div>
+    <div class="card-body">
+        {% if analytics %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Overall Score</th>
+                            <th>HR Score</th>
+                            <th>Technical Score</th>
+                            <th>Questions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for analytic in analytics %}
+                        <tr>
+                            <td>{{ analytic.started_at[:10] }}</td>
+                            <td>{{ analytic.interview_type }}</td>
+                            <td>
+                                <span class="badge bg-{{ 'success' if analytic.overall_score >= 70 else 'warning' if analytic.overall_score >= 50 else 'danger' }}">
+                                    {{ "%.1f"|format(analytic.overall_score) }}%
+                                </span>
+                            </td>
+                            <td>{{ "%.1f"|format(analytic.hr_score or 0) }}%</td>
+                            <td>{{ "%.1f"|format(analytic.technical_score or 0) }}%</td>
+                            <td>{{ analytic.questions_answered }}/{{ analytic.total_questions }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-center">No performance data yet. Complete an interview to see your analytics.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

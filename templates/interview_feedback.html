@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Feedback - AI Interview Preparation System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <!-- Question Review -->
+        <div class="card mb-3">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Question Review</h5>
+            </div>
+            <div class="card-body">
+                <h6>{{ question.question_text }}</h6>
+                <p class="text-muted mb-2">Your Answer:</p>
+                <p class="border p-3 bg-light">{{ user_answer }}</p>
+            </div>
+        </div>
+
+        <!-- AI Evaluation Results -->
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">AI Evaluation Results</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6 text-center">
+                        <h2 class="display-4 
+                            {% if evaluation.score >= 80 %}text-success
+                            {% elif evaluation.score >= 60 %}text-info
+                            {% elif evaluation.score >= 40 %}text-warning
+                            {% else %}text-danger{% endif %}">
+                            {{ "%.1f"|format(evaluation.score) }}%
+                        </h2>
+                        <p class="text-muted">Overall Score</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Score Breakdown:</h6>
+                        <div class="progress mb-2" style="height: 25px;">
+                            <div class="progress-bar 
+                                {% if evaluation.score >= 80 %}bg-success
+                                {% elif evaluation.score >= 60 %}bg-info
+                                {% elif evaluation.score >= 40 %}bg-warning
+                                {% else %}bg-danger{% endif %}" 
+                                role="progressbar" 
+                                style="width: {{ evaluation.score }}%"
+                                aria-valuenow="{{ evaluation.score }}" 
+                                aria-valuemin="0" 
+                                aria-valuemax="100">
+                                {{ "%.1f"|format(evaluation.score) }}%
+                            </div>
+                        </div>
+                        <small class="text-muted">
+                            Evaluation based on TF-IDF similarity, keyword matching, and answer completeness
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Feedback -->
+                <div class="alert 
+                    {% if evaluation.score >= 80 %}alert-success
+                    {% elif evaluation.score >= 60 %}alert-info
+                    {% elif evaluation.score >= 40 %}alert-warning
+                    {% else %}alert-danger{% endif %}">
+                    <h6><strong>AI Feedback:</strong></h6>
+                    <p class="mb-0">{{ evaluation.feedback }}</p>
+                </div>
+
+                <!-- Keywords Matched -->
+                {% if evaluation.keywords_matched %}
+                <div class="mt-3">
+                    <h6>Key Concepts Identified:</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for keyword in evaluation.keywords_matched %}
+                        <span class="badge bg-secondary">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- How AI Evaluation Works -->
+        <div class="card mb-3">
+            <div class="card-header bg-secondary text-white">
+                <h6 class="mb-0">How AI Evaluation Works</h6>
+            </div>
+            <div class="card-body">
+                <small class="text-muted">
+                    <strong>1. TF-IDF + Cosine Similarity (50%):</strong> Compares semantic meaning of your answer with ideal answer<br>
+                    <strong>2. Keyword Matching (30%):</strong> Identifies important technical terms and concepts<br>
+                    <strong>3. Length Analysis (20%):</strong> Ensures answer completeness and detail level
+                </small>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="text-center">
+            {% if is_complete %}
+                <a href="{{ url_for('interview_complete') }}" class="btn btn-success btn-lg">
+                    View Final Results
+                </a>
+            {% else %}
+                <a href="{{ url_for('interview_question') }}" class="btn btn-primary btn-lg">
+                    Continue to Next Question ({{ question_num + 1 }}/{{ total_questions }})
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

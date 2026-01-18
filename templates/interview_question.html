@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Interview Question - AI Interview Preparation System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">
+                    Question {{ question_num }} of {{ total_questions }}
+                    <span class="badge bg-light text-dark ms-2">{{ question.question_type }}</span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <h4>{{ question.question_text }}</h4>
+                    {% if question.category %}
+                        <p class="text-muted">Category: {{ question.category }} | Difficulty: {{ question.difficulty }}</p>
+                    {% endif %}
+                </div>
+                
+                <form method="POST" action="{{ url_for('submit_answer') }}">
+                    <div class="mb-3">
+                        <label for="answer" class="form-label">Your Answer:</label>
+                        <textarea class="form-control" id="answer" name="answer" rows="8" 
+                                  placeholder="Type your answer here..." required></textarea>
+                        <small class="form-text text-muted">Minimum 20 words recommended for better evaluation.</small>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel Interview</a>
+                        <button type="submit" class="btn btn-primary">Submit Answer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

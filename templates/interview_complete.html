@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Interview Complete - AI Interview Preparation System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0">Interview Completed!</h3>
+            </div>
+            <div class="card-body">
+                <div class="row text-center mb-4">
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5>Overall Score</h5>
+                                <h2 class="text-primary">{{ "%.1f"|format(avg_score) }}%</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5>HR Score</h5>
+                                <h2 class="text-info">{{ "%.1f"|format(hr_score) }}%</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5>Technical Score</h5>
+                                <h2 class="text-success">{{ "%.1f"|format(technical_score) }}%</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strengths & Weaknesses Section -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card border-success">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">✅ Your Strengths</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if strengths %}
+                            <ul class="list-unstyled">
+                                {% for strength in strengths %}
+                                <li class="mb-2">
+                                    <i class="bi bi-check-circle-fill text-success"></i> {{ strength }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted">Keep practicing to identify your strengths!</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-warning">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">⚠️ Areas for Improvement</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if weaknesses %}
+                            <ul class="list-unstyled">
+                                {% for weakness in weaknesses %}
+                                <li class="mb-2">
+                                    <i class="bi bi-exclamation-triangle-fill text-warning"></i> {{ weakness }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted">Great job! Continue maintaining your performance.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Improvement Suggestions -->
+        {% if improvement_suggestions %}
+        <div class="card mb-4 border-info">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">💡 Improvement Suggestions</h5>
+            </div>
+            <div class="card-body">
+                <ol>
+                    {% for suggestion in improvement_suggestions %}
+                    <li class="mb-2">{{ suggestion }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="card">
+            <div class="card-header">
+                <h5>Detailed Feedback</h5>
+            </div>
+            <div class="card-body">
+                {% for response in responses %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ response.question_text }}</h6>
+                        <p class="text-muted"><strong>Your Answer:</strong> {{ response.user_answer[:200] }}{% if response.user_answer|length > 200 %}...{% endif %}</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Score:</strong> 
+                                    <span class="badge bg-{{ 'success' if response.score >= 70 else 'warning' if response.score >= 50 else 'danger' }}">
+                                        {{ "%.1f"|format(response.score) }}%
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Feedback:</strong> {{ response.feedback }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <div class="mt-4 text-center">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-primary me-2">Back to Dashboard</a>
+                    <a href="{{ url_for('start_interview') }}" class="btn btn-success">Start New Interview</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

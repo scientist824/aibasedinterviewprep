@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Start Interview - AI Interview Preparation System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title mb-0">Start Mock Interview</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('start_interview') }}">
+                    <div class="mb-3">
+                        <label for="interview_type" class="form-label">Interview Type</label>
+                        <select class="form-select" id="interview_type" name="interview_type" required>
+                            <option value="HR">HR Interview</option>
+                            <option value="Technical">Technical Interview</option>
+                            <option value="Mixed">Mixed (HR + Technical)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="num_questions" class="form-label">Number of Questions</label>
+                        <select class="form-select" id="num_questions" name="num_questions" required>
+                            <option value="3">3 Questions</option>
+                            <option value="5" selected>5 Questions</option>
+                            <option value="10">10 Questions</option>
+                        </select>
+                    </div>
+                    <div class="alert alert-info">
+                        <strong>Instructions:</strong>
+                        <ul class="mb-0">
+                            <li>Answer each question thoughtfully</li>
+                            <li>Your answers will be evaluated using AI</li>
+                            <li>You'll receive feedback after each question</li>
+                            <li>Complete all questions to see your final performance</li>
+                        </ul>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Start Interview</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

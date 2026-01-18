@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Home - AI Interview Preparation System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto text-center">
+        <h1 class="display-4 mb-4">AI-Based Interview Preparation System</h1>
+        <img src="imgs/download(1).jpg" alt="">
+        <p class="lead mb-4">
+            Prepare for your job interviews with AI-powered mock interviews. 
+            Get instant feedback on your answers using Natural Language Processing.
+        </p>
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Mock Interviews</h5>
+                        <p class="card-text">Practice with HR and Technical questions in a simulated interview environment.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">AI Evaluation</h5>
+                        <p class="card-text">Get instant AI-powered feedback on your answers using NLP techniques.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Performance Analytics</h5>
+                        <p class="card-text">Track your progress and identify areas for improvement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            {% if not session.user_id %}
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">Get Started</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg">Login</a>
+            {% else %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg me-2">Go to Dashboard</a>
+                <a href="{{ url_for('start_interview') }}" class="btn btn-success btn-lg">Start Interview</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
