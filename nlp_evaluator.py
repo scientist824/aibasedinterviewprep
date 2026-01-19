@@ -102,10 +102,7 @@ def calculate_tfidf_similarity(user_answer, ideal_answer):
     - Higher values indicate more similar content
     """
     try:
-        # Create TF-IDF vectorizer
-        # max_features: limit vocabulary size for efficiency
-        # stop_words: remove common English words
-        # ngram_range: consider single words and word pairs
+        
         vectorizer = TfidfVectorizer(
             max_features=500,
             stop_words='english',
